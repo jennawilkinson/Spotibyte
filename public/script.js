@@ -1,29 +1,58 @@
-const $itemsContainer = document.querySelector("section#items")
+const $songsContainer = document.querySelector("section#songs")
 const $cart = document.querySelector("section#cart ul")
 let items = []
+let songs = []
 let inCart = []
 
-loadItems()
-
-function loadItems() {
-    fetch("/items")
+//loadItems()
+loadSongs()
+function loadSongs() {
+    fetch("/songs")
         .then( response => response.json() )
         .then( response => {
         console.log(response)
-            createItemCards(response) 
+            createSongCards(response) 
         })
         .catch(err => console.error(err))
 }
 
-function createItemCards(_items) {
-    items = _items
-    const itemsHTML = _items.map(item => 
-        `<div class="item">
-            <h3>Name: ${item.name}</h3>            
-            <button onClick="addToCart(${item.itemid}, event)">Add to Cart</button>
+//new stuff
+function addSongs(){
+     event.preventDefault()
+    //create order object
+    const $form = document.forms[1]
+    const order = {
+        song: {
+            name: $form.name.value,
+            artist: $form.artist.value,
+            genre: $form.genre.value
+            
+        }
+    }
+    //POST on /login
+    const config = {
+        method: "POST",
+        body: JSON.stringify( order ),
+        headers: {
+            "Content-Type":"application/json"
+        }
+    }
+    fetch("/addsong",config)
+        .then( response => response.json() )
+        .then( response => console.log(response) )
+        .catch(err => console.error(err))
+
+}
+
+function createSongCards(_songs) {
+    songs = _songs
+    const songsHTML = _songs.map(song => 
+        `<div class="song">
+            <h3>Name: ${song.name}</h3>            
+            <button onClick="Play(${song.songid}, event)">Play</button>
         </div>`
     ).join('')
-    $itemsContainer.innerHTML = itemsHTML    
+    $songsContainer.innerHTML = songsHTML    
 }
 
 function login(event) {
@@ -32,8 +61,8 @@ function login(event) {
     const $form = document.forms[0]
     const order = {
         user: {
-            first: $form.first.value,
-            last: $form.last.value,
+            first: $form.firstName.value,
+            last: $form.lastName.value,
             email: $form.email.value,
             password: $form.password.value
         }
@@ -53,6 +82,33 @@ function login(event) {
 
 }
 
+function createAccount(event) {
+    event.preventDefault()
+    //create order object
+    const $form = document.forms[0]
+    const order = {
+        user: {
+            first: $form.firstName.value,
+            last: $form.lastName.value,
+            email: $form.email.value,
+            password: $form.password.value
+        }
+    }
+    //POST on /login
+    const config = {
+        method: "POST",
+        body: JSON.stringify( order ),
+        headers: {
+            "Content-Type":"application/json"
+        }
+    }
+    fetch("/createAccount",config)
+        .then( response => response.json() )
+        .then( response => console.log(response) )
+        .catch(err => console.error(err))
+
+}
+
 function addToCart(id, event) {
     const item = items.find(item => item.itemid == id)
 
@@ -63,3 +119,4 @@ function addToCart(id, event) {
     inCart.push(item)
     document.querySelector("span#itemCount").innerHTML = inCart.length
 }
+
