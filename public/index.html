@@ -6,28 +6,46 @@
     </head>
     <body>
         <header>
-            <h1>NV Spirit Store</h1>
+            <h1>Welcome to Spotibyte!</h1>
         </header>
+        <section>
+            <a href = "account.html">Create an Account</a>
+        </section>
         <section id="account">
+            <h2>Login</h2>
             <form>
-                <label for="first">First Name: </label>
-                <input name="first" required>
-                <label for="last">Last Name: </label>
-                <input name="last" required>
                 <label for="email">Email: </label>
                 <input name="email" required>
                 <label for="password">Password: </label>
                 <input name="password" type="password" required>
                 <input type="submit" onClick="login(event)">
             </form>
+            <h2>Add a Song</h2>
+            <form>
+             <label for="name">Song Name: </label>
+                <input name="name" required>
+                <label for="artist">Artist: </label>
+                <input name="artist" required>
+                <label for="genre">Genre: </label>
+                <input name="genre" required>
+                <p><input type="button" value="Add Song" onClick="addSongs(event)"></p>
+            </form>    
         </section>
-        <section id="cart">
-            <h3>Cart</h3>
-            <ul>
-            </ul>
-        </section>
-        <section id="items">
+        
+        <h2>Playlist</h2>
+        <section id="songs">
+                <ul><li></li></ul>
+                <ul><li></li></ul>
+                <ul><li></li></ul>
+                <ul><li></li></ul>
+                <ul><li></li></ul>
+                <ul><li></li></ul>
+                <ul><li></li></ul>
+                <ul><li></li></ul>
+                <ul><li></li></ul>
+                <ul><li></li></ul>
         </section>
         <script src="script.js"></script>
     </body>
 </html>
+
